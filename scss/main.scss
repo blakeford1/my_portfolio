@@ -47,6 +47,14 @@ $background-opacity: 0.7;
   }
 }
 
+@function set-text-color($color) {
+  @if (lightness($color) > 40) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+
 //------------------------BODY---------------------------//
 
 * {
@@ -56,7 +64,7 @@ $background-opacity: 0.7;
 body {
   @include background;
   background: $primary-color;
-  color: #fff;
+  color: set-text-color($primary-color);
   height: 100%;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -97,7 +105,9 @@ header {
 
 main {
   padding: 4rem;
-  height: 100%;
+  // height: 100%;
+  min-height: calc(100vh - 60px);
+
   &#home {
     overflow: hidden;
     h1 {
@@ -130,7 +140,7 @@ main {
     width: 28px;
     height: 3px;
     margin: 0 0 5px 0;
-    background: #fff;
+    background: set-text-color($primary-color);
     @include easeOut;
   }
 
@@ -209,7 +219,7 @@ img {
     text-transform: uppercase;
     padding: 1rem 0;
     font-weight: 300;
-    color: #fff;
+    color: set-text-color($primary-color);
     text-decoration: none;
     @include easeOut;
   }
@@ -275,10 +285,70 @@ img {
     }
     background: url("../portrait_small.jpg");
   }
+
+  .about-info {
+    grid-template-areas:
+      "bio-image"
+      "bio"
+      "project-1"
+      "project-2"
+      "project-3";
+
+    grid-template-columns: 1fr;
+  }
 }
 
 @include mediaSm {
   main#home h1 {
     margin-top: 10vh;
   }
+}
+//---------------ABOUT ME-------------------//
+.about-info {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-areas:
+    "bioimage bio bio"
+    "project-1 project-2 project-3";
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.bio-image {
+  grid-area: bioimage;
+  margin: auto;
+  border-radius: 50%;
+  border: $secondary-color 3px solid;
+}
+
+.bio {
+  grid-area: bio;
+  font-size: 1.5rem;
+}
+
+.project-1 {
+  grid-area: project-1;
+  background: lighten($primary-color, 5);
+  padding: 0.5rem;
+  border-bottom: $secondary-color 5px solid;
+}
+.project-2 {
+  grid-area: project-2;
+  background: lighten($primary-color, 5);
+  padding: 0.5rem;
+  border-bottom: $secondary-color 5px solid;
+}
+.project-3 {
+  grid-area: project-3;
+  background: lighten($primary-color, 5);
+  padding: 0.5rem;
+  border-bottom: $secondary-color 5px solid;
+}
+
+#footer-main {
+  text-align: center;
+  padding: 1rem;
+  background: darken($primary-color, 10);
+  color: set-text-color($primary-color);
+  height: 60px;
+  position: absolute;
 }
